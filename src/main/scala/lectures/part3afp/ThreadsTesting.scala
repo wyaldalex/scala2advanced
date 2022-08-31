@@ -66,3 +66,49 @@ object ExecutorTesting extends App {
   //Should finish X computations very closely at around 3 seconds
   runnableList.foreach(x => pool.execute(x))
 }
+
+object ThreadRaceConditionSample extends App {
+
+  class BankAccount(var amount: Double) {
+
+  }
+
+  def buy(account: BankAccount, thing: String, price: Double): Unit = {
+    account.amount -= price
+  }
+
+  for(_ <- 1 to 50000) {
+    val account = new BankAccount(50000)
+    val thread1 = new Thread(() => buy(account,"shoes",3000))
+    val thread2 = new Thread(() => buy(account,"Iphone",4000))
+    thread1.start()
+    thread2.start()
+    Thread.sleep(10)
+    if (account.amount != 43000) println(s"Bank transaction wrong! ${account.amount}")
+
+  }
+
+  //safe thread alternatives do the operation with synchronized
+  //use @volatile notation at the class level
+  class SafeBankAccount(@volatile var amount: Double)
+  def safeBuy(account: BankAccount, thing: String, price: Double): Unit = {
+    account.synchronized{
+      account.amount -= price
+    }
+  }
+}
+
+object ThreadInceptionExercise extends App {
+
+  def inceptionThreads(maxThreads: Int, i: Int = 1): Thread = new Thread(() => {
+    if(i < maxThreads) {
+      val newThread = inceptionThreads(maxThreads, i + 1)
+      newThread.start()
+      newThread.join()
+    }
+    println(s"Hello from thread $i")
+  })
+
+  inceptionThreads(50).start()
+
+}
