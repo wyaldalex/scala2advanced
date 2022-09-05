@@ -36,3 +36,28 @@ object ImplicitsTesting extends App {
   println(random2(4))
 
 }
+
+object OrderingImplicits extends App {
+
+  implicit val inverseOrderingNumbers: Ordering[Int] = Ordering.fromLessThan(_ > _)
+  //implicit val normalOrderingNumbers: Ordering[Int] = Ordering.fromLessThan(_ < _) //Having two implicits for the same causes compiler issue
+  val testList = List(12,23,3,6,7,5,1,3,46,9,100)
+  println(testList.sorted)
+
+
+
+  case class User(id: Int, name: String, email: String)
+  implicit val userOdering : Ordering[User] = Ordering.fromLessThan((a,b) => {
+    a.name < b.name
+  })
+
+  val userList = List(
+    User(1,"Xavier","asdas"),
+    User(2,"Logan","asdas"),
+    User(3,"Esther","asdas"),
+    User(4,"Peter","asdas"),
+    User(5,"Abraham","asdas"),
+  )
+  println(userList.sorted)
+
+}
