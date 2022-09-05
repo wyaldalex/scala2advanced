@@ -37,4 +37,8 @@ object FunctionCurryingExercise extends App {
   someNumbers.foreach(x => println(complexFormat(x)))
   someNumbers.foreach(x => println(precisionFormat(x)))
 
+  //uncurried version
+  def toBaseFormaterUncurried(f: String => Double => String): (String, Double) => String = (x, y) => f(x)(y)
+  println(s"Using uncurried version ${toBaseFormaterUncurried(baseFormater)("%14.12f",Math.PI)}")
+
 }
