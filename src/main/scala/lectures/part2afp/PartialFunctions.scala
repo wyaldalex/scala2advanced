@@ -78,3 +78,18 @@ object PartialFunctionsExercises extends App {
   stdin.getLines().foreach(megaChatbotR2x111)
 
 }
+
+object PartialFunctionsExercises2 extends App {
+
+  import lectures.common.Tanks._
+  val partialTankClassificator : PartialFunction[Double,String] = {
+    case x: Double if x >= 100 => "High caliber tank"
+    case x: Double if x >= 70 && x < 100 => "Medium caliber tank"
+    case x: Double if x < 70 => "Light caliber tank"
+    case _ => "Wrong value"
+  }
+
+  val tankClassifications = tankList.map(x => partialTankClassificator(x.cannonMM))
+  println(tankClassifications)
+
+}
