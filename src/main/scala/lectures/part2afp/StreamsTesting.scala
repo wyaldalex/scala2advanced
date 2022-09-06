@@ -11,3 +11,21 @@ object StreamsTesting extends App {
   println(biggerStream.take(40).foldLeft(1000000)(_ + _))
 
 }
+
+
+object StreamsTesting2 extends App {
+
+  val massiveStream : Stream[Int] = (1 to 1000000000).toStream
+  println(massiveStream.take(5).reduce(_ + _))
+  /*
+  However, be careful with methods that aren’t transformers.
+  Calls to the following strict methods are evaluated immediately
+  and can easily cause java.lang.OutOfMemoryError errors:
+  stream.max
+  stream.size
+  stream.sum
+  * */
+
+
+
+}
