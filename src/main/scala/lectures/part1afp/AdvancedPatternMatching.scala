@@ -61,9 +61,11 @@ object AdvancedPatternMatching2Decompose extends App {
                       ) extends MyList[A]
 
   object MyList {
-    def unapplySeq[A](list: MyList[A]) : Option[Seq[A]] =
+    def unapplySeq[A](list: MyList[A]) : Option[Seq[A]] = {
+      
       if (list == Empty) Some(Seq.empty)
       else unapplySeq(list.tail).map(list.head +: _)
+    }
   }
 
   val myList : MyList[Int] = Cons(1,Cons(2,Cons(3, Cons(4,Cons(5,Empty)))))
