@@ -2,9 +2,9 @@ package lectures.part2afp
 
 object LazyEvaluations extends App {
 
-  //CALL BY NEED EXAMPLE
+  //CALL BY NAME EXAMPLE
   def byNameMethod(n: => Int) : Int = {
-    //CALL BY NEED - convert to lazy val to execute all at the same time
+    //CALL BY NAME - convert to lazy val to execute all at the same time
     //waiting time reduced from 3 seconds to 1 second
     lazy val t = n
     t + t + t + 1

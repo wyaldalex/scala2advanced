@@ -1,14 +1,9 @@
-import Dependencies._
+name := "testing-bank"
 
-ThisBuild / scalaVersion     := "2.12.10"
-ThisBuild / version          := "0.1.0-SNAPSHOT"
-ThisBuild / organization     := "com.example"
-ThisBuild / organizationName := "example"
+version := "1.0.0-SNAPSHOT"
 
-lazy val root = (project in file("."))
-  .settings(
-    name := "hello-scala",
-    libraryDependencies += scalaTest % Test
-  )
-
-// See https://www.scala-sbt.org/1.x/docs/Using-Sonatype.html for instructions on how to publish to Sonatype.
+libraryDependencies ++= Seq(
+  "org.scalatest" %% "scalatest" % "3.0.8",
+  "org.typelevel" %% "cats-core" % "2.2.0",
+  "org.typelevel" %% "cats-effect" % "2.5.3"
+)
