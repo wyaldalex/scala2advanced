@@ -6,7 +6,7 @@ object ImplicitsTesting extends App {
 
   val stringTuple = "a" -> "ADAS"
 
-  case class Person(name: String) {
+  case class Person(name: String, age: Int = 99) {
     val greet = s"Hey my name is $name"
   }
 
@@ -22,6 +22,7 @@ object ImplicitsTesting extends App {
   that may help compile this thing
    */
   println("Lasldasda".greet)
+  println("Lasldasda".age)
 
   //implicit parameters
   implicit val someRandomInteger4000123120102 : Int = 12912312
@@ -59,5 +60,36 @@ object OrderingImplicits extends App {
     User(5,"Abraham","asdas"),
   )
   println(userList.sorted)
+
+}
+
+
+object ImplicitOrderingExercise2 extends App {
+
+  case class Tank(id: Int, name: String, cannonMM: Double, armorThickness: Double)
+  case class AttackHelicopter(id: Int, name: String, sealing: Double, payload: Double)
+
+  val genericTankList = (1 to 10).toList.map(x => {
+    Tank(x,s"Tank-$x",(Random.nextDouble()*100)+30,(Random.nextDouble()*100)+10)
+  })
+
+  val genericHelicopterList = (1 to 10).toList.map(x => {
+    Tank(x, s"Tank-$x", (Random.nextDouble() * 100) + 1000, (Random.nextDouble() * 100) + 500)
+  })
+
+  println(genericTankList)
+  println(genericHelicopterList)
+
+  //create a generic sorting that could work with either tank or helicopter
+  implicit val tankOrdering : Ordering[Tank] = Ordering.fromLessThan((tankA, tankB) => {
+    tankA.cannonMM > tankB.cannonMM
+  })
+  implicit val helicopterOrdering: Ordering[AttackHelicopter] = Ordering.fromLessThan((heliA, heliB) => {
+    heliA.payload > heliA.payload
+  })
+
+  println(genericTankList.sorted)
+  println(genericHelicopterList.sorted)
+
 
 }
