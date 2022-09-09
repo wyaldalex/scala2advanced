@@ -42,3 +42,26 @@ object FunctionCurryingExercise extends App {
   println(s"Using uncurried version ${toBaseFormaterUncurried(baseFormater)("%14.12f",Math.PI)}")
 
 }
+
+object CurryingRecap extends App {
+
+
+  //Currying is the ability to transform multiple argument functions into a function
+  //that takes 1 argument
+  def uncurriedFunction (a: Int, b: Int) : Int = a+b
+
+  //curried form 1
+  def curriedv1 (a: Int) = (b: Int) => a+ b
+  println(curriedv1(1)(90))
+
+  //partially applied function
+  val sum = curriedv1(9)
+  println(sum(99))
+
+  //preferred syntax
+  def curriedv2 (a: Int)  (b: Int) = a+ b
+  val sum2 = curriedv2(9)_ //notice that the usage of underscores is requiered in this case
+  println(sum2(999))
+
+
+}

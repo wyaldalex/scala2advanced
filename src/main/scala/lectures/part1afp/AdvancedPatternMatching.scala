@@ -5,10 +5,14 @@ object AdvancedPatternMatching extends App {
 
   case class ProperPerson(name: String, age: Int)
 
-  val properPerson = new ProperPerson("Bob",50)
+  val properPerson = ProperPerson("Bob",50)
   val classicalPerson = new ClassicalPerson("Bob",50)
 
-  //For case classes pattern matching works out of the box
+  //For case classes pattern matching works out of the box, why?
+  /*
+  Because case classes extend serializable, have hash code, and other stuff which make them work
+  with pattern matching easly
+  * */
   val result = properPerson match {
     case ProperPerson(x,b) => s"Proper person $x"
   }
@@ -128,5 +132,28 @@ object CommonStuff {
       Some(if (age > 21) "major" else "minor")
     }
   }
+}
+
+object CaseSerializationProof extends App {
+
+  class Dog(val name: String, val age: Int)
+  case class Dog2(name: String, age: Int)
+
+  val someDog = new Dog("asdas",21)
+  val someDog2 = Dog2("asdas",21)
+
+  //decomposition work by defaul with case classes
+  val result = someDog2 match {
+    case Dog2(x,y) => println("SOmething")
+  }
+
+  //decomposition fails with normal classes
+  /*
+  val result2 = someDog match {
+    case Dog(x, y) => println("SOmething")
+  } */
+
+
+
 }
 
